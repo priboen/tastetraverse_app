@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tastetraverse_app/api/controller/kuliner_controller.dart';
 import 'package:tastetraverse_app/app/modules/detail/widget/detail_widget.dart';
+import 'package:tastetraverse_app/app/modules/home/view/home_screen.dart';
 
 class DetailScreen extends StatefulWidget {
   DetailScreen({super.key, required this.data});
@@ -9,6 +11,7 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  KulinerController kulinerController = KulinerController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +75,46 @@ class _DetailScreenState extends State<DetailScreen> {
                   ),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Hapus Kuliner"),
+                            content: Text(
+                                "Apakah anda yakin ingin menghapus kuliner ini?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Tidak"),
+                              ),
+                              TextButton(
+                                onPressed: () async {
+                                  var result = await kulinerController
+                                      .deleteKuliner(widget.data['id']);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        result['message'],
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                },
+                                child: Text("Ya"),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                   icon: Icon(Icons.delete, color: Colors.red),
                   label: Text(
                     'Hapus Data',
