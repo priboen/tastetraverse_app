@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tastetraverse_app/app/modules/form/widget/form_header.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -19,8 +20,10 @@ class _FormScreenState extends State<FormScreen> {
         title: const Text("Masukan Data Kuliner"),
       ),
       body: Form(
-          child: Column(
-        children: [],
+          child: SingleChildScrollView(
+        child: Column(
+          children: [FormHeaderWidget()],
+        ),
       )),
     );
   }
