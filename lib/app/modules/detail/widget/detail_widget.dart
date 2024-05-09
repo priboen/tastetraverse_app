@@ -5,10 +5,12 @@ class TextDetailWidget extends StatelessWidget {
       {super.key,
       required this.textWidget,
       required this.ukuranBox,
-      required this.styleParam});
+      required this.styleParam,
+      required this.alignParam});
   final String textWidget;
   final double ukuranBox;
   final TextStyle styleParam;
+  final TextAlign alignParam;
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -16,6 +18,7 @@ class TextDetailWidget extends StatelessWidget {
       Text(
         textWidget,
         style: styleParam,
+        textAlign: alignParam,
       ),
     ]);
   }

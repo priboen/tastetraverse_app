@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tastetraverse_app/api/controller/kuliner_controller.dart';
 import 'package:tastetraverse_app/app/data/kuliner.dart';
+import 'package:tastetraverse_app/app/modules/detail/view/detail_screen.dart';
 import 'package:tastetraverse_app/app/modules/form/view/form_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -35,10 +36,24 @@ class _HomeScreenState extends State<HomeScreen> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(snapshot.data![index].nama),
-                  subtitle: Text(snapshot.data![index].jenis),
-                  trailing: Text(snapshot.data![index].harga.toString()),
+                Kuliner kuliner = snapshot.data![index];
+                return Card(
+                  margin: EdgeInsets.all(5),
+                  child: ListTile(
+                    title: Text(kuliner.nama),
+                    subtitle: Text(kuliner.jenis),
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(kuliner.gambar),
+                    ),
+                    trailing: Icon(Icons.remove_red_eye),
+                    onTap: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  DetailScreen(data: kuliner.toMap())));
+                    },
+                  ),
                 );
               },
             );
