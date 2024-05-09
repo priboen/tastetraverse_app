@@ -1,13 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 class Kuliner {
+  int? id;
   final String nama;
   final String tempat;
   final String jenis;
   final int harga;
   final String gambar;
   Kuliner({
+    this.id,
     required this.nama,
     required this.tempat,
     required this.jenis,
@@ -16,6 +20,7 @@ class Kuliner {
   });
 
   Kuliner copyWith({
+    ValueGetter<int?>? id,
     String? nama,
     String? tempat,
     String? jenis,
@@ -23,6 +28,7 @@ class Kuliner {
     String? gambar,
   }) {
     return Kuliner(
+      id: id != null ? id() : this.id,
       nama: nama ?? this.nama,
       tempat: tempat ?? this.tempat,
       jenis: jenis ?? this.jenis,
@@ -33,6 +39,7 @@ class Kuliner {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'nama': nama,
       'tempat': tempat,
       'jenis': jenis,
@@ -43,6 +50,7 @@ class Kuliner {
 
   factory Kuliner.fromMap(Map<String, dynamic> map) {
     return Kuliner(
+      id: map['id']?.toInt(),
       nama: map['nama'] as String,
       tempat: map['tempat'] as String,
       jenis: map['jenis'] as String,
@@ -58,14 +66,15 @@ class Kuliner {
 
   @override
   String toString() {
-    return 'Kuliner(nama: $nama, tempat: $tempat, jenis: $jenis, harga: $harga, gambar: $gambar)';
+    return 'Kuliner(id: $id,nama: $nama, tempat: $tempat, jenis: $jenis, harga: $harga, gambar: $gambar)';
   }
 
   @override
   bool operator ==(covariant Kuliner other) {
     if (identical(this, other)) return true;
 
-    return other.nama == nama &&
+    return other.id == id &&
+        other.nama == nama &&
         other.tempat == tempat &&
         other.jenis == jenis &&
         other.harga == harga &&
@@ -74,7 +83,8 @@ class Kuliner {
 
   @override
   int get hashCode {
-    return nama.hashCode ^
+    return id.hashCode ^
+        nama.hashCode ^
         tempat.hashCode ^
         jenis.hashCode ^
         harga.hashCode ^
