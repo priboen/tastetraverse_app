@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tastetraverse_app/app/modules/form/view/form_screen.dart';
+import 'package:tastetraverse_app/app/modules/home/view/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: FormScreen(),
+      home: HomeScreen(),
     );
   }
 }
