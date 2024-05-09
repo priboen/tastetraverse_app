@@ -8,6 +8,10 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _namaController = TextEditingController();
+  final _jenisController = TextEditingController();
+  final _hargaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
