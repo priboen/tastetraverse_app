@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tastetraverse_app/api/controller/kuliner_controller.dart';
 import 'package:tastetraverse_app/app/modules/detail/widget/detail_widget.dart';
+import 'package:tastetraverse_app/app/modules/edit/edit_screen.dart';
 import 'package:tastetraverse_app/app/modules/home/view/home_screen.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -68,7 +69,13 @@ class _DetailScreenState extends State<DetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                EditScreen(data: widget.data)));
+                  },
                   icon: Icon(Icons.edit),
                   label: Text(
                     'Edit Data',

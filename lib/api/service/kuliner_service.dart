@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class KulinerService {
-  final String baseUrl = "http://10.0.2.2:8000/api/";
+  // final String baseUrl = "http://10.0.2.2:8000/api/";
   // final String baseUrl = "http://127.0.0.1:8000/api/";
-  // final String baseUrl = "http://192.168.1.45:8000/api/";
+  final String baseUrl = "http://192.168.1.7:8000/api/";
   final endpoint = "kuliner";
 
   Uri getUri(String path) {
@@ -34,6 +34,24 @@ class KulinerService {
     var request = http.MultipartRequest(
       'POST',
       getUri(endpoint),
+    )
+      ..fields.addAll(data)
+      ..headers['Content-Type'] = 'application/json';
+
+    if (file != null) {
+      request.files.add(await http.MultipartFile.fromPath('gambar', file.path));
+    } else {
+      request.files.add(http.MultipartFile.fromString('gambar', ''));
+    }
+
+    return await http.Response.fromStream(await request.send());
+  }
+
+  Future<http.Response> updateKuliner(
+      int id, Map<String, String> data, File? file) async {
+    var request = http.MultipartRequest(
+      'POST',
+      getUri('$endpoint/$id'),
     )
       ..fields.addAll(data)
       ..headers['Content-Type'] = 'application/json';
