@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:tastetraverse_app/api/service/kuliner_service.dart';
 import 'package:tastetraverse_app/app/data/kuliner.dart';
@@ -15,6 +16,43 @@ class KulinerController {
     } catch (e) {
       print(e);
       throw Exception('Gagal Mendapatkan data Kuliner');
+    }
+  }
+
+  Future<Map<String, dynamic>> addKuliner(Kuliner kuliner, File? file) async {
+    Map<String, String> data = {
+      "nama": kuliner.nama,
+      "jenis": kuliner.jenis,
+      "harga": kuliner.harga.toString(),
+      "tempat": kuliner.tempat,
+      "gambar": kuliner.gambar
+    };
+
+    try {
+      var response = await kulinerService.addKuliner(data, file);
+      if (response.statusCode == 201) {
+        return {
+          'success': true,
+          "message": "Data berhasil disimpan",
+        };
+      } else {
+        if (response.headers['content-type']!.contains('application/json')) {
+          var decodedJson = jsonDecode(response.body);
+          return {
+            'success': false,
+            "message": decodedJson['message'] ?? 'Terjadi kesalahan',
+          };
+        }
+
+        var decodedJson = jsonDecode(response.body);
+        return {
+          'success': false,
+          'message':
+              decodedJson['message'] ?? 'Terjadi kesalahan saat menyimpan data'
+        };
+      }
+    } catch (e) {
+      return {"success": false, "message": 'Terjadi kesalahan: $e'};
     }
   }
 
